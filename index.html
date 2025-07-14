@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <base target="_top">
+    <title>Marks Viewer |
+        <?= course?>-
+        <?= section?>
+        <?= semester?>
+    </title>
+    <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Marks Viewer<br></h2>
+        <h4>
+            <?= course?>-
+            <?= section?>
+            <?= semester?>
+        </h4>
+        <form id="form">
+            <select name="assessment" id="assessment" required>
+                <option value="" disabled selected> Select Assessment</option>
+                <option value="quiz1">Quiz 1</option>
+                <option value="quiz2">Quiz 2</option>
+                <option value="quiz3">Quiz 3</option>
+                <option value="quiz4">Quiz 4</option>
+                <option value="assignment">Assignment</option>
+                <option value="mid">Mid</option>
+                <option value="final">Final</option>
+                <option value="grade">Grade</option>
+            </select><br>
+            <input type="text" name="id" placeholder="Student ID" required><br>
+            <input type="text" name="code" placeholder="Unique Code" required><br>
+            <input type="submit" value="Show Mark">
+        </form>
+        <div id="result"></div>
+    </div>
+    <p class="signature">
+        <?= semester?> | by PDS
+    </p>
+
+    <script>
+        document.getElementById("form").addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.querySelector('[name="id"]').value;
+            const code = document.querySelector('[name="code"]').value;
+            const assessmentMenu = document.querySelector('[name="assessment"]');
+            assessment = assessmentMenu.options[assessmentMenu.selectedIndex].text;
+
+            google.script.run.withSuccessHandler(showResult).getMarks(assessment, id, code)
+        });
+
+        function showResult(responses) {
+            const resultDiv = document.getElementById("result");
+            let rows = "";
+
+            if (responses.isSuccess) {
+                for (const key of responses.orderedKeysToShow) {
+                    if (key === "Total" || key === "GPA") {
+                        rows += `
+                <tr>
+                  <td class="marks-total">${key}:</td><td><span class="marks-total">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
+                </tr>
+              `;
+                    }
+                    else if (key === "Letter Grade") {
+                        rows += `
+                <tr>
+                  <td>${key}:</td><td><span class="marks">${responses.marksObj[key]}</span></td>
+                </tr>
+              `;
+                    }
+                    else if (key.includes("Set")) {
+                        rows += `
+                <tr>
+                  <td>Question Set:</td><td class="marks">${responses.marksObj[key]}</td>
+                </tr>
+              `;
+                    }
+                    else {
+                        rows += `
+                <tr>
+                  <td>${key}:</td><td><span class="marks">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
+                </tr>
+            `;
+                    }
+                }
+                resultDiv.innerHTML = `
+            <div class="code-block">
+              <h3>Hello ${responses.name}!</h3>
+              <p>
+                ${(assessment === "Grade") ?
+                        `Your course <span class="marks">Grade</span> is as follows:` :
+                        `Your <span class="marks">${assessment}</span> marks are as follows:`
+                    }
+              </p>
+              <table>${rows}</table>
+            </div>
+            
+            ${(responses.solutionLink !== "" && responses.solutionLink !== null && responses.solutionLink !== " ") ?
+                        `<div>
+                <a href=${responses.solutionLink} target="_blank" rel="noopener noreferrer" class="solution">View Solution</a>
+              </div>` : ""
+                    }
+          `;
+            }
+            else {
+                resultDiv.innerHTML = `
+            <p style="color: red;">${responses.message}</p>
+          `;
+            }
+        }
+    </script>
+</body>
+
+</html>
