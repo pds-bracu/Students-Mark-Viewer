@@ -1,25 +1,25 @@
 function doGet() {
   const template = HtmlService.createTemplateFromFile('index');
 
-  template.course = "CSE251";
+  template.course = "CSE250";
   template.semester = "Summer 2025";
-  template.section = 6;
+  template.section = "4, 19";
 
   return template.evaluate();
 }
 
 function getMarks(assessment, id, code) {
-  const markSpreadsheetId = "16phH4jPzbAORLxOTZTGBrr8_RkF2vNYt9qcFXFjrqkU";
+  const markSpreadsheetId = "1mFAl5wSJOSldxTe1c......";
   const assessmentSheet = SpreadsheetApp.openById(markSpreadsheetId).getSheetByName(assessment);
   const publishStatus = assessmentSheet.getRange("A1").getValue();
 
   if(publishStatus !== "Publish ✔") {
     let messageStr;
     if(assessment === "Grade") {
-      messageStr = "Course grade has not been publishd yet";
+      messageStr = "Course grade is not available yet";
     }
     else {
-      messageStr = assessment + " marks have not been publishd yet";
+      messageStr = assessment + " marks have not been published yet";
     }
     return {
       isSuccess: false,
@@ -27,7 +27,7 @@ function getMarks(assessment, id, code) {
     };
   }
 
-  const uniqueCode = SpreadsheetApp.openById(markSpreadsheetId).getSheetByName("Attend").getRange("F3:F").getValues();
+  const uniqueCode = SpreadsheetApp.openById(markSpreadsheetId).getSheetByName("Unique Code").getRange("F3:F").getValues();
   const rawData = assessmentSheet.getDataRange().getValues();
   
   const headers = [];
@@ -38,15 +38,16 @@ function getMarks(assessment, id, code) {
   let noSolution = 1;
   
   for(let i=0; i<rawData[0].length; i++) {
-    if(rawData[0][i] !== "" && rawData[0][i] !== null && rawData[0][i] !== " ") {
+    if(rawData[0][i] !== "" && rawData[0][i] !== null && rawData[0][i] !== " " && !rawData[0][i].toString().trim().includes("~")) {
       headers.push(rawData[0][i]);
       outOfMarks.push(rawData[2][i]);
       nonBlankColNo.push(i);
     }
-    if(headers[i] === "Solution") {
-      noSolution = 0;
-      solutionLink = outOfMarks[outOfMarks.length-1];
-    }
+  }
+
+  if(headers.findIndex(header => header.includes("Solution")) !== -1) {
+    noSolution = 0;
+    solutionLink = outOfMarks[outOfMarks.length-1];
   }
 
   for(let i=0; i<rawData.length; i++) {
@@ -87,6 +88,6 @@ function getMarks(assessment, id, code) {
   }
   return {
     isSuccess: false,
-    message: "Student ID or code don't match!",
+    message: "Student ID or code doesn't match!",
   };
 }
