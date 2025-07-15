@@ -83,8 +83,9 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 2. Maintain the column structure:
    - Start with `Publish ✔ / Section`, `SL`, `ID`, `Name`, and `Email`
 3. The following columns after `Email` are the marks columns that will be published. Set as you want.
-4. > **IMPORTANT:** If you don't want to publish a column within the marks section, just remove the header content (the cell in row 1).  
+4. > **IMPORTANT:** If you don't want to publish a column within the marks section, just remove the header content (the cell in row 1) or add a `~` symbol anywhere in that header.
    > Any columns with a **blank header** in row 1 will **not** be published.
+5. Add the new assessment as an option to the dropdown menu in the `index.html` file.
 
 
 ### ⚠️ Do Not
@@ -139,6 +140,9 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 5. The page will display:
    - The **mark** for that assessment.
    - A **"View Solution"** button (if a solution link is available).
+
+> ⚠️ **Note:** If marks don't appear instantly, please be patient and try clicking the **"Show Mark"** button again after a few seconds.  
+> This can occasionally happen due to high load or multiple simultaneous accesses to the spreadsheet.
 
 ---
 
