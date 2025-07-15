@@ -2,15 +2,18 @@
 
 **Student Marks Viewer** is a secure web application built using **Google Apps Script** that allows students to view their assessment marks and solution links through a user-friendly web interface. Each student uses a **unique access code** (sent via email once) and their **Student ID** to securely access their results stored in a linked **Google Sheet**.
 
-## 🚀 Features
+# Key Features
 
-- 🔐 Secure access using **Student ID** and **Unique Code**
-- 📋 Dropdown to select an assessment (Quiz 1, Mid, Final, Grade, etc.)
-- 📊 View individual **marks** for selected assessments
-- 📘 **"View Solution"** button for assessments (if avalable) to see question solutions
-- 🧾 Data managed easily via Google Sheets
-- 🎨 Clean and mobile-friendly interface (HTML/CSS)
-- 💡 Teacher-managed & serverless deployment via Apps Script
+- 🔐 **Secure access** using **Student ID** and a **Unique Code**
+- 📋 **Dropdown to select assessments** (e.g., Quiz 1, Midterm, Final, Grades, etc.)
+- ✅ **Selective publishing**:
+  - Choose **which assessments** to publish or keep hidden
+  - Within an assessment, choose **which marks** to show (e.g., hide class average or certain subquestions)
+- 📊 **View individual marks** for selected assessments
+- 📘 **"View Solution"** button (if available) to access solutions for published assessments
+- 🧾 **Easy data management** via Google Sheets
+- 🎨 **Clean, responsive interface** (HTML/CSS) — mobile-friendly
+- 💡 **Teacher-managed & serverless** via Google Apps Script
 
 ---
 
@@ -29,7 +32,7 @@ Student-Marks-Viewer/
 
 ### 1. 📄 Copy the Google Sheet Template
 
-👉 [Click here to open the Blank Sheet Template](https://docs.google.com/spreadsheets/d/1W_ZZ2X2_TEMPLATE_SHEET_ID_HERE/edit?usp=sharing)
+👉 [Click here to open the Blank Sheet Template](https://docs.google.com/spreadsheets/d/19rNr-BRpQWBltKCmNdtYA6bVGSO1ozm7uoRcXQZbxh0/edit?usp=sharing)
 
 - Go to **File > Make a copy** to create your own version.
 - > Set the privacy of the spreadsheet to `Public`. 
@@ -40,7 +43,7 @@ Student-Marks-Viewer/
 1. Open [Google Apps Script](https://script.google.com/).
 2. Create a new project.
 3. Replace `Code.gs` with your backend script.
-4. Add `index.html` and `style.html` as HTML files and copy paste script.
+4. Add `index.html` and `style.html` as HTML files and copy and paste the script.
 
 ### 3. 🔁 Configure Project Variables in `Code.gs`
 
@@ -91,7 +94,7 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 ### ⚠️ Do Not
 
 - ❌ Delete or rename the first five columns (`Publish ✔ / Section`, `SL`, `ID`, `Name`, `Email`)
-- ❌ Make the sheet public or share the with students **without notifying** — it should only be accessed by Apps Script.
+- ❌ Make the sheet public or share it with students **without notifying** — it should only be accessed by Apps Script.
 
 ### 📁 Example Sheet (Quiz 1)
 
@@ -132,7 +135,7 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 ## 👨‍🎓 Student Usage Flow
 
 1. Open the shared web app URL.
-2. Use the **dropdown menu** to select an assessment (e.g., `Quiz 1`, `Mid`, `Final`, `Attendance`, `Assignment` and `Grade`).
+2. Use the **dropdown menu** to select an assessment (e.g., `Quiz 1`, `Mid`, `Final`, `Attendance`, `Assignment`, and `Grade`).
 3. Enter:
    - Their **Student ID**
    - Their **Unique Code** (provided by the instructor)
