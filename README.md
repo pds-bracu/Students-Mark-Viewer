@@ -32,6 +32,7 @@ Student-Marks-Viewer/
 👉 [Click here to open the Blank Sheet Template](https://docs.google.com/spreadsheets/d/1W_ZZ2X2_TEMPLATE_SHEET_ID_HERE/edit?usp=sharing)
 
 - Go to **File > Make a copy** to create your own version.
+- > Set the privacy of the spreadsheet to `Public`. 
 - Copy the **Sheet ID** from the URL:  
 
 ### 2. 🔧 Set Up Apps Script
@@ -52,7 +53,7 @@ template.semester = "Summer 2025"; // update semester
 
 template.section = 6; //update section
 
-const markSpreadsheetId = "16phH4jPzbAORLxOTZTGB"; // update your sheet Id here
+const markSpreadsheetId = "16phH4jPzbAORLxOTZTGB..."; // update your sheet Id here
 ```
 ---
 
@@ -73,15 +74,15 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 |:---:|:----------:|:----------:|:-----:|:--------:|
 |     |    CO1     |    CO2     |       |          |
 |     | 8 Marks    | 12 Marks   | 20 Marks | https://driv... |
-|  A  |     6      |     9      |   15  | View     |
+|  A  |     6      |     9      |   15  |      |
 
 ### ➕ Adding New Assessments
 
 1. Create a **new sheet/tab** in the same Google Sheet for each assessment:
    - Sheet names should match dropdown items (e.g., `Quiz 1`, `Mid`, `Final`, `Grade`).
 2. Maintain the column structure:
-   - Start with `Publish ✔ / Section`, `SL`, `ID`, `Name`, `Email`
-3. Next columns after `Email` are the marks columns that will be published. Set as you want.
+   - Start with `Publish ✔ / Section`, `SL`, `ID`, `Name`, and `Email`
+3. The following columns after `Email` are the marks columns that will be published. Set as you want.
 4. > **IMPORTANT:** If you don't want to publish a column within the marks section, just remove the header content (the cell in row 1).  
    > Any columns with a **blank header** in row 1 will **not** be published.
 
@@ -108,6 +109,8 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 
 ![result](sample_result_2.png)
 
+![result](sample_result_3.png)
+
 ## ✅ Deployment Steps
 
 1. Open the [Google Apps Script Editor](https://script.google.com/).
@@ -128,11 +131,11 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 ## 👨‍🎓 Student Usage Flow
 
 1. Open the shared web app URL.
-2. Use the **dropdown menu** to select an assessment (e.g., `Quiz 1`, `Mid`, `Final`).
+2. Use the **dropdown menu** to select an assessment (e.g., `Quiz 1`, `Mid`, `Final`, `Attendance`, `Assignment` and `Grade`).
 3. Enter:
    - Their **Student ID**
    - Their **Unique Code** (provided by the instructor)
-4. Click **"View Result"**.
+4. Click **"Show Mark"**.
 5. The page will display:
    - The **mark** for that assessment.
    - A **"View Solution"** button (if a solution link is available).
