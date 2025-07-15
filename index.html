@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+  <head>
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <base target="_top">
-    <title>Marks Viewer |
-        <?= course?>-
-        <?= section?>
-        <?= semester?>
-    </title>
+    <title>Marks Viewer | <?= course?>-<?= section?> <?= semester?></title>
     <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
         <h2>Marks Viewer<br></h2>
-        <h4>
-            <?= course?>-
-            <?= section?>
-            <?= semester?>
-        </h4>
+        <h4><?= course?>-<?= section?> <?= semester?></h4>
         <form id="form">
             <select name="assessment" id="assessment" required>
                 <option value="" disabled selected> Select Assessment</option>
+                <option value="attendance">Attendance</option>
                 <option value="quiz1">Quiz 1</option>
                 <option value="quiz2">Quiz 2</option>
                 <option value="quiz3">Quiz 3</option>
@@ -38,82 +31,96 @@
         </form>
         <div id="result"></div>
     </div>
-    <p class="signature">
-        <?= semester?> | by PDS
-    </p>
-
+    <p class="signature"><?= semester?> | by PDS</p>
+      
     <script>
-        document.getElementById("form").addEventListener('submit', function (e) {
-            e.preventDefault();
-            const id = document.querySelector('[name="id"]').value;
-            const code = document.querySelector('[name="code"]').value;
-            const assessmentMenu = document.querySelector('[name="assessment"]');
-            assessment = assessmentMenu.options[assessmentMenu.selectedIndex].text;
+      document.getElementById("form").addEventListener('submit', function (e) {
+        e.preventDefault();
+        const id = document.querySelector('[name="id"]').value;
+        const code = document.querySelector('[name="code"]').value;
+        const assessmentMenu = document.querySelector('[name="assessment"]');
+        assessment = assessmentMenu.options[assessmentMenu.selectedIndex].text;
 
-            google.script.run.withSuccessHandler(showResult).getMarks(assessment, id, code)
-        });
+      google.script.run.withSuccessHandler(showResult).getMarks(assessment, id, code)
+      });
 
-        function showResult(responses) {
-            const resultDiv = document.getElementById("result");
-            let rows = "";
-
-            if (responses.isSuccess) {
-                for (const key of responses.orderedKeysToShow) {
-                    if (key === "Total" || key === "GPA") {
-                        rows += `
+      function showResult(responses) {
+        const resultDiv = document.getElementById("result");
+        
+        let rows = "";
+        if(responses.isSuccess) {
+          if(assessment === "Attendance") {
+            rows += `
+              <p>
+                You attended <span class="highlight-2">${responses.marksObj["Number of Classes Present"]}</span> out of <span class="highlight-1">${responses.outOfMarksObj["Total Number of Classes"]}</span> classes
+              </p>
+              <table>
                 <tr>
-                  <td class="marks-total">${key}:</td><td><span class="marks-total">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
+                  <td>Presence: </td><td><span class="highlight-1">${responses.marksObj["Presence %"]}%</span></td>
                 </tr>
-              `;
-                    }
-                    else if (key === "Letter Grade") {
-                        rows += `
-                <tr>
-                  <td>${key}:</td><td><span class="marks">${responses.marksObj[key]}</span></td>
-                </tr>
-              `;
-                    }
-                    else if (key.includes("Set")) {
-                        rows += `
-                <tr>
-                  <td>Question Set:</td><td class="marks">${responses.marksObj[key]}</td>
-                </tr>
-              `;
-                    }
-                    else {
-                        rows += `
-                <tr>
-                  <td>${key}:</td><td><span class="marks">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
-                </tr>
+              </table>
             `;
-                    }
-                }
-                resultDiv.innerHTML = `
+          }
+          else {
+            for(const key of responses.orderedKeysToShow) {
+              if(key === "Total" || key === "GPA") {
+                rows += `
+                  <tr>
+                    <td class="highlight-2">${key}:</td><td><span class="highlight-2">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
+                  </tr>
+                `;
+              }
+              else if(key === "Letter Grade") {
+                rows += `
+                  <tr>
+                    <td>${key}:</td><td><span class="highlight-1">${responses.marksObj[key]}</span></td>
+                  </tr>
+                `;
+              }
+              else if(key.includes("Set")) {
+                rows += `
+                  <tr>
+                    <td>Question Set:</td><td class="highlight-1">${responses.marksObj[key]}</td>
+                  </tr>
+                `;
+              }
+              else {
+                rows += `
+                  <tr>
+                    <td>${key}:</td><td><span class="highlight-1">${responses.marksObj[key]}</span> out of ${responses.outOfMarksObj[key]}</td>
+                  </tr>
+              `;
+              }
+            }
+          }
+          resultDiv.innerHTML = `
             <div class="code-block">
               <h3>Hello ${responses.name}!</h3>
               <p>
-                ${(assessment === "Grade") ?
-                        `Your course <span class="marks">Grade</span> is as follows:` :
-                        `Your <span class="marks">${assessment}</span> marks are as follows:`
-                    }
+                ${(assessment === "Grade")
+                ? `Your course <span class="highlight-1">Grade</span> is as follows:`
+                : assessment === "Attendance"
+                ? `Your <span class="highlight-1">${assessment}</span> detail is as follows:`
+                : `Your <span class="highlight-1">${assessment}</span> marks are as follows:`
+                }
               </p>
               <table>${rows}</table>
             </div>
             
             ${(responses.solutionLink !== "" && responses.solutionLink !== null && responses.solutionLink !== " ") ?
-                        `<div>
+              `<div>
                 <a href=${responses.solutionLink} target="_blank" rel="noopener noreferrer" class="solution">View Solution</a>
               </div>` : ""
-                    }
-          `;
             }
-            else {
-                resultDiv.innerHTML = `
+          `;
+        }
+        else {
+          resultDiv.innerHTML = `
             <p style="color: red;">${responses.message}</p>
           `;
-            }
         }
+      }
     </script>
-</body>
+  </body>
 
 </html>
