@@ -8,7 +8,7 @@
 - 📋 **Dropdown to select assessments** (e.g., Quiz 1, Midterm, Final, Grades, etc.)
 - ✅ **Selective publishing**:
   - Choose **which assessments** to publish or keep hidden
-  - Within an assessment, choose **which marks** to show (e.g., hide class average or certain subquestions)
+  - Within an assessment, choose **which marks** to show (e.g., hide class average or certain questions)
 - 📊 **View individual marks** for selected assessments
 - 📘 **"View Solution"** button (if available) to access solutions for published assessments
 - 🧾 **Easy data management** via Google Sheets
@@ -99,7 +99,7 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 
 ### 📁 Example Sheet (Quiz 1)
 
-| Publish ✔ | SL | ID       | Name       | Email               | Set | Question 1 | Question 2 | Total    | Solution            |
+| ✔ | SL | ID       | Name       | Email               | Set | Question 1 | Question 2 | Total    | Solution            |
 |:---------:|:--:|:--------:|:----------:|:-------------------:|:--:|:----------:|:----------:|:--------:|:-------------------:|
 | Section   |    |          |            |                     |    |    CO1     |    CO2     |          |                     |
 |           |    |          |            |                     |    | 8 Marks    | 12 Marks   | 20 Marks | https://drive.link1 |
