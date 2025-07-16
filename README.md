@@ -1,6 +1,6 @@
 # Student Marks Viewer
 
-**Student Marks Viewer** is a secure web application built using **Google Apps Script** that allows students to view their assessment marks and solution links through a user-friendly web interface. Each student uses a **unique access code** (sent via email once) and their **Student ID** to securely access their results stored in a linked **Google Sheet**.
+**Student Marks Viewer** is a secure web application built using **Google Apps Script** that allows students to view their assessment marks and solution links through a user-friendly web interface. Each student uses a **unique access code** (sent via email once) and their **Student ID** to securely access their results stored in a **Google Sheet**.
 
 # Key Features
 
@@ -42,7 +42,7 @@ Student-Marks-Viewer/
 
 1. Open [Google Apps Script](https://script.google.com/).
 2. Create a new project.
-3. Replace `Code.gs` with your backend script.
+3. Replace `Code.gs` with the backend script.
 4. Add `index.html` and `style.html` as HTML files and copy and paste the script.
 
 ### 3. 🔁 Configure Project Variables in `Code.gs`
@@ -66,7 +66,7 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 
 ### ✅ Fixed Rows and Columns (Do NOT remove or add in between)
 
-| Publish ✔ | SL | ID | Name | Email |
+| ✔ | SL | ID | Name | Email |
 |:---------:|:--:|:--:|:----:|:-----:|
 | Section   |    |    |      |       |
 |           |    |    |      |       |
@@ -81,20 +81,21 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 
 ### ➕ Adding New Assessments
 
-1. Create a **new sheet/tab** in the same Google Sheet for each assessment:
+1. Duplicate an existing **sheet/tab** to add a new assessment:
    - Sheet names should match dropdown items (e.g., `Quiz 1`, `Mid`, `Final`, `Grade`).
 2. Maintain the column structure:
-   - Start with `Publish ✔ / Section`, `SL`, `ID`, `Name`, and `Email`
-3. The following columns after `Email` are the marks columns that will be published. Set as you want.
-4. > **IMPORTANT:** If you don't want to publish a column within the marks section, just remove the header content (the cell in row 1) or add a `~` symbol anywhere in that header.
-   > Any columns with a **blank header** in row 1 will **not** be published.
-5. Add the new assessment as an option to the dropdown menu in the `index.html` file.
+   - Fixed columns are `✔ / Section`, `SL`, `ID`, `Name`, and `Email`
+3. The following columns after `Email` are the marks columns that will be published.
+4. If you don't want to publish an assessment, change `✔` to `✘` in the cell `A1`.
+5. > **IMPORTANT:** If you don't want to publish a column (after `Email` column) within an assignment, remove the header content or include a `~` symbol anywhere in the header content.
+   > Any columns with a **blank header** or inclusion of `~` symbol in will **not** be published.
+6. Add the new assessment as an option to the dropdown menu in the `index.html` file.
 
 
 ### ⚠️ Do Not
 
-- ❌ Delete or rename the first five columns (`Publish ✔ / Section`, `SL`, `ID`, `Name`, `Email`)
-- ❌ Make the sheet public or share it with students **without notifying** — it should only be accessed by Apps Script.
+- ❌ Delete the first five columns (`Publish ✔ / Section`, `SL`, `ID`, `Name`, and `Email`)
+- ❌ Delete the first three rows
 
 ### 📁 Example Sheet (Quiz 1)
 
