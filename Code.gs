@@ -9,11 +9,11 @@ function doGet() {
 }
 
 function getMarks(assessment, id, code) {
-  const markSpreadsheetId = "1mFAl5wSJOSldxTe1c......";
+  const markSpreadsheetId = "1hFAl5wSJ....";
   const assessmentSheet = SpreadsheetApp.openById(markSpreadsheetId).getSheetByName(assessment);
   const publishStatus = assessmentSheet.getRange("A1").getValue();
 
-  if(publishStatus !== "Publish ✔") {
+  if(!publishStatus.includes("✔")) {
     let messageStr;
     if(assessment === "Grade") {
       messageStr = "Course grade is not available yet";
