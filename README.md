@@ -35,7 +35,7 @@ Student-Marks-Viewer/
 👉 [Click here to open the Blank Sheet Template](https://docs.google.com/spreadsheets/d/19rNr-BRpQWBltKCmNdtYA6bVGSO1ozm7uoRcXQZbxh0/edit?usp=sharing)
 
 - Go to **File > Make a copy** to create your own version.
-- > Set the privacy of the spreadsheet to `Public`. 
+  - > Set the privacy of the spreadsheet to `Public`. 
 - Copy the **Sheet ID** from the URL:  
 
 ### 2. 🔧 Set Up Apps Script
@@ -50,11 +50,11 @@ Student-Marks-Viewer/
 Open `Code.gs` and update:
 
 ```js
-template.course = "CSE251"; // update course
+template.course = "CSE250"; // update course
 
 template.semester = "Summer 2025"; // update semester
 
-template.section = 6; //update section
+template.section = "4, 19"; //update section
 
 const markSpreadsheetId = "16phH4jPzbAORLxOTZTGB..."; // update your sheet Id here
 ```
@@ -94,7 +94,7 @@ To ensure smooth operation, follow this strict format for each sheet/tab (one ta
 
 ### ⚠️ Do Not
 
-- ❌ Delete the first five columns (`Publish ✔ / Section`, `SL`, `ID`, `Name`, and `Email`)
+- ❌ Delete the first five columns (`✔ / Section`, `SL`, `ID`, `Name`, and `Email`)
 - ❌ Delete the first three rows
 
 ### 📁 Example Sheet (Quiz 1)
